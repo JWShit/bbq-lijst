@@ -2,26 +2,80 @@
 <html lang="nl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <title>BBQ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #1d2129;
+    }
+    .login-container {
+      width: 350px;
+      background-color: white;
+      box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.20);
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: normal;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: normal;
+      color: #606770;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    input[type=text], input[type=number] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 10px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 12px;
+    }
+    button {
+      background-color: #421;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 5px;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+    #status {
+      text-align: center;
+      color: #606770;
+    }
+  </style>
 </head>
 <body>
-  <h1>BBQ-aanmelding</h1>
-  <form id="bbq">
-    <p><label>Naam<br><input name="naam" required></label></p>
-    <p><label>Vlees<br>
-      <select name="vlees" required>
-        <option>Spareribs</option>
-        <option>Kip</option>
-        <option>Worst</option>
-        <option>Vegetarisch</option>
-      </select>
-    </label></p>
-    <p><label>Aantal personen<br><input name="personen" type="number" min="1" required></label></p>
-    <p><label>Opmerking<br><textarea name="opmerking"></textarea></label></p>
-    <button type="submit">Verstuur</button>
-  </form>
-  <p id="status"></p>
+  <div class="login-container">
+    <form id="bbq">
+      <h1>BBQ</h1>
+      <h2>BBQ Birthday Johnny</h2>
+      <label for="meat"><b>Meat</b></label>
+      <input type="text" placeholder="Enter kind of meat" name="meat" id="meat" required>
+      <label for="quantity"><b>Quantity of persons</b></label>
+      <input type="number" placeholder="Person Quantity" name="quantity" id="quantity" min="1" required>
+      <button type="submit">Submit BBQ Form</button>
+    </form>
+    <p id="status"></p>
+  </div>
   <script>
     document.getElementById('bbq').addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -29,7 +83,7 @@
       status.textContent = 'Bezig...';
       const data = Object.fromEntries(new FormData(e.target));
       try {
-        const res = await fetch('https://bbq.jordywy.workers.dev', {
+        const res = await fetch('https://bbq.jouwnaam.workers.dev', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
