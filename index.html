@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BBQ</title>
+</head>
+<body>
+  <h1>BBQ-aanmelding</h1>
+  <form id="bbq">
+    <p><label>Naam<br><input name="naam" required></label></p>
+    <p><label>Vlees<br>
+      <select name="vlees" required>
+        <option>Spareribs</option>
+        <option>Kip</option>
+        <option>Worst</option>
+        <option>Vegetarisch</option>
+      </select>
+    </label></p>
+    <p><label>Aantal personen<br><input name="personen" type="number" min="1" required></label></p>
+    <p><label>Opmerking<br><textarea name="opmerking"></textarea></label></p>
+    <button type="submit">Verstuur</button>
+  </form>
+  <p id="status"></p>
+  <script>
+    document.getElementById('bbq').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const status = document.getElementById('status');
+      status.textContent = 'Bezig...';
+      const data = Object.fromEntries(new FormData(e.target));
+      try {
+        const res = await fetch('https://bbq.jordywy.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        status.textContent = res.ok ? 'Verstuurd. Kijk in Discord.' : 'Mislukt.';
+      } catch (err) {
+        status.textContent = 'Mislukt. Controleer de Worker-URL.';
+      }
+    });
+  </script>
+</body>
+</html>
