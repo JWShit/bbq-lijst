@@ -238,8 +238,10 @@ document.getElementById('email-form-step').addEventListener('submit', async func
       body: JSON.stringify(data)
     });
   } catch (err) {
-    // stil falen of eigen feedback toevoegen indien gewenst
+    // stil falen
   }
+  // Altijd doorsturen naar de website na het versturen
+  window.location.href = 'https://www.barbecook.be/';
 });
 </script>
 </body>
